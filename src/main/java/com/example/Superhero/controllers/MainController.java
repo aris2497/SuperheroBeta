@@ -8,6 +8,7 @@ import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 
+import javax.servlet.http.HttpServletRequest;
 import java.util.List;
 
 @Controller
@@ -22,19 +23,19 @@ public class MainController {
         return "SuperCharacters";
     }
 
-   /* @PostMapping("addTeacher")
-    public String addTeacher(HttpServletRequest request) {
-        String firstName = request.getParameter("firstName");
-        String lastName = request.getParameter("lastName");
-        String specialty = request.getParameter("specialty");
+    @PostMapping("addSuperCharacter")
+    public String addSuperCharacter(HttpServletRequest request) {
+        String name = request.getParameter("name");
+        String description = request.getParameter("description");
+        String superpower = request.getParameter("superpower");
 
-        Teacher teacher = new Teacher();
-        teacher.setFirstName(firstName);
-        teacher.setLastName(lastName);
-        teacher.setSpecialty(specialty);
+        SuperCharacter superChar = new SuperCharacter();
+        superChar.setName(name);
+        superChar.setDescription(description);
+        superChar.setSuperpower(superpower);
 
-        teacherDao.addTeacher(teacher);
+        superCharacterDao.addSuperCharacter(superChar);
 
-        return "redirect:/teachers";
-    }*/
+        return "redirect:/superCharacters";
+    }
 }
