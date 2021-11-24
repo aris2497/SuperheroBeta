@@ -2,6 +2,7 @@ package com.example.Superhero.dto;
 
 public class Member {
     private int id;
+    private String name;
     private int organisation;
 
     public int getId() {
@@ -18,5 +19,12 @@ public class Member {
 
     public void setOrganisation(int organisation) {
         this.organisation = organisation;
+    }
+    public String getName() {
+        return name;
+    }
+
+    public void setName(String name) {
+        this.name = name;
     }
 }

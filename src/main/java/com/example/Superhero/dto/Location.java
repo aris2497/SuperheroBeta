@@ -46,4 +46,15 @@ public class Location {
     public void setCoordinates(String coordinates) {
         this.coordinates = coordinates;
     }
+
+    @Override
+    public String toString() {
+        return "Location{" +
+                "id=" + id +
+                ", name='" + name + '\'' +
+                ", description='" + description + '\'' +
+                ", address='" + address + '\'' +
+                ", coordinates='" + coordinates + '\'' +
+                '}';
+    }
 }

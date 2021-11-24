@@ -1,17 +1,17 @@
 package com.example.Superhero.dto;
 
 public class Organisation {
-    private int organisation;
+    private int organisationId;
     private String name;
     private String description;
-    private int address;
+    private String address;
 
-    public int getOrganisation() {
-        return organisation;
+    public int getOrganisationId() {
+        return organisationId;
     }
 
-    public void setOrganisation(int organisation) {
-        this.organisation = organisation;
+    public void setOrganisationId(int organisationId) {
+        this.organisationId = organisationId;
     }
 
     public String getName() {
@@ -30,11 +30,21 @@ public class Organisation {
         this.description = description;
     }
 
-    public int getAddress() {
+    public String getAddress() {
         return address;
     }
 
-    public void setAddress(int address) {
+    public void setAddress(String address) {
         this.address = address;
+    }
+
+    @Override
+    public String toString() {
+        return "Organisation{" +
+                "organisation=" + organisationId +
+                ", name='" + name + '\'' +
+                ", description='" + description + '\'' +
+                ", address='" + address + '\'' +
+                '}';
     }
 }

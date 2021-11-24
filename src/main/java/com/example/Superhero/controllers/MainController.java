@@ -1,10 +1,7 @@
 package com.example.Superhero.controllers;
 
-import com.example.Superhero.dao.SightingDao;
-import com.example.Superhero.dao.SightingDaoDB;
-import com.example.Superhero.dao.SuperCharacterDao;
-import com.example.Superhero.dto.Sighting;
-import com.example.Superhero.dto.SuperCharacter;
+import com.example.Superhero.dao.*;
+import com.example.Superhero.dto.*;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -23,12 +20,36 @@ public class MainController {
     @Autowired
     SightingDaoDB sightingDaoDB;
 
-    @GetMapping
+    @Autowired
+    LocationDaoDB locationDaoDB;
+
+    @Autowired
+    OrganisationDao organisationDao;
+
+    @Autowired
+    MemberDaoDB memberDaoDB;
+
+    @GetMapping("home")
     public String displayNewsFeed(Model model) {
         List<Sighting> sightings = sightingDaoDB.getAllSightingByDate();
         System.out.println(sightings.toString());
-        model.addAttribute("sightings", sightings.);
+        for (Sighting s: sightings
+             ) {
+            s.setLocation(locationDaoDB.getLocationById(Integer.parseInt(s.getLocation())).getName());
+            s.setSuperCharacter(superCharacterDao.getSuperCharacterById(Integer.parseInt(s.getSuperCharacter())).getName());
+        }
+        //getSuperCharacterById()
+        //getLocationById()
+        model.addAttribute("sightings", sightings);
         return "Home";
+    }
+
+    @GetMapping("locations")
+    public String displayLocations(Model model) {
+        List<Location> locations = locationDaoDB.getAllLocations();
+        model.addAttribute("locations", locations);
+
+        return "Location";
     }
 
     @GetMapping("superCharacters")
@@ -74,6 +95,33 @@ public class MainController {
         System.out.println(superCharacter.toString());
         return "EditSuperCharacter";
     }
+    @GetMapping("seeMembers")
+    public String seeMembers(HttpServletRequest request, Model model) {
+        int id = Integer.parseInt(request.getParameter("id"));
+        List<Member> members = memberDaoDB.getAllMembersByOrganisation(id);
+
+        model.addAttribute("members", members);
+        return "MembersAtOrganisation";
+    }
+    @GetMapping("seeOrganisationSuperCharacters")
+    public String seeOrganisationSuperCharacters(HttpServletRequest request, Model model) {
+        int id = Integer.parseInt(request.getParameter("id"));
+        List<SuperCharacter> superCharacters  = superCharacterDao.get(id);
+
+        model.addAttribute("superCharacters", superCharacters);
+        return "SuperCharAtOrganisation";
+    }
+
+    @GetMapping("superCharactersAtLocation")
+    public String getSuperCharactersAtLocation(HttpServletRequest request, Model model) {
+        int id = Integer.parseInt(request.getParameter("id"));
+        Location location = locationDaoDB.getLocationById(id);
+        List<SuperCharacter> superCharacters = superCharacterDao.getAllSuperCharactersByLocation(location);
+
+        model.addAttribute("superCharacters", superCharacters);
+        System.out.println(superCharacters.toString());
+        return "SuperCharactersAtLocation";
+    }
 
     @PostMapping("editSuperCharacter")
     public String performEditTeacher(HttpServletRequest request) {
@@ -87,5 +135,13 @@ public class MainController {
         superCharacterDao.updateSuperCharacter(superCharacter);
 
         return "redirect:/superCharacters";
+    }
+
+    @GetMapping("organisations")
+    public String getOrganisations(Model model){
+        List<Organisation> organizations = organisationDao.getAllOrganisation();
+        model.addAttribute("organizations", organizations);
+
+        return "Organisations";
     }
 }

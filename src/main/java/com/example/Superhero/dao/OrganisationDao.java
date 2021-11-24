@@ -7,5 +7,6 @@ import java.util.List;
 
 public interface OrganisationDao {
     List<Organisation> getAllSuperCharacterOrganisations(SuperCharacter superChar);
+    List<Organisation> getAllOrganisation();
 
 }
