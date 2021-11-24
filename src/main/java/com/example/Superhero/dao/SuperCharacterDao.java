@@ -15,4 +15,6 @@ public interface SuperCharacterDao {
 
     List<SuperCharacter> getAllSuperCharacters();
     List<SuperCharacter> getAllSuperCharactersByLocation(Location location); //to report all of the superheroes sighted at a particular location.
+
+    List<SuperCharacter> getAllSuperCharactersByOrganisation(int id);
 }

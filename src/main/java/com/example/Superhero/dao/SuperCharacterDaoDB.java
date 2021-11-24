@@ -26,6 +26,20 @@ public class SuperCharacterDaoDB implements SuperCharacterDao {
                 new SuperCharacterDaoDB.SuperCharacterMapper(), new Object[]{location.getId()});
     }
 
+    @Override
+    public List<SuperCharacter> getAllSuperCharactersByOrganisation(int id) {
+        String SELECT_SUPERCHAR_BY_ORGANISATION = "SELECT s.*\n" +
+                "FROM superCharacter s\n" +
+                "JOIN heroOrganisation ho\n" +
+                "  ON s.superId = ho.superID\n" +
+                "JOIN organisation o\n" +
+                "  ON o.organisationId = ho.organisationID\n" +
+                "WHERE ho.organisationID = ?";
+        return this.jdbc.query(SELECT_SUPERCHAR_BY_ORGANISATION,
+                new SuperCharacterDaoDB.SuperCharacterMapper(), new Object[]{id});
+
+    }
+
     public SuperCharacter getSuperCharacterById(int id) {
         try {
             String SELECT_SUPERCHAR_BY_ID = "SELECT * FROM superCharacter WHERE superId = ?";

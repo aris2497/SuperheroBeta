@@ -106,7 +106,7 @@ public class MainController {
     @GetMapping("seeOrganisationSuperCharacters")
     public String seeOrganisationSuperCharacters(HttpServletRequest request, Model model) {
         int id = Integer.parseInt(request.getParameter("id"));
-        List<SuperCharacter> superCharacters  = superCharacterDao.get(id);
+        List<SuperCharacter> superCharacters  = superCharacterDao.getAllSuperCharactersByOrganisation(id);
 
         model.addAttribute("superCharacters", superCharacters);
         return "SuperCharAtOrganisation";
