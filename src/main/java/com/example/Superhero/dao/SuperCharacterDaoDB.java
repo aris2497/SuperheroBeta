@@ -22,13 +22,15 @@ public class SuperCharacterDaoDB implements SuperCharacterDao {
 
     public List<SuperCharacter> getAllSuperCharactersByLocation(Location location) {
         String SELECT_SUPERCHAR_BY_LOCATION = "SELECT s.* FROM superCharacter s JOIN sighting sg ON sg.superCharacter = s.superId WHERE sg.location = ?";
-        return this.jdbc.query("SELECT s.* FROM superCharacter s JOIN sighting sg ON sg.superCharacter = s.superId WHERE sg.location = ?", new SuperCharacterDaoDB.SuperCharacterMapper(), new Object[]{location.getId()});
+        return this.jdbc.query("SELECT s.* FROM superCharacter s JOIN sighting sg ON sg.superCharacter = s.superId WHERE sg.location = ?",
+                new SuperCharacterDaoDB.SuperCharacterMapper(), new Object[]{location.getId()});
     }
 
     public SuperCharacter getSuperCharacterById(int id) {
         try {
-            String SELECT_SUPERCHAR_BY_ID = "SELECT * FROM superCharacter WHERE id = ?";
-            return (SuperCharacter)this.jdbc.queryForObject("SELECT * FROM superCharacter WHERE id = ?", new SuperCharacterDaoDB.SuperCharacterMapper(), new Object[]{id});
+            String SELECT_SUPERCHAR_BY_ID = "SELECT * FROM superCharacter WHERE superId = ?";
+            return (SuperCharacter)this.jdbc.queryForObject("SELECT * FROM superCharacter WHERE superId = ?",
+                    new SuperCharacterDaoDB.SuperCharacterMapper(), new Object[]{id});
         } catch (DataAccessException var3) {
             return null;
         }
@@ -37,23 +39,27 @@ public class SuperCharacterDaoDB implements SuperCharacterDao {
     @Transactional
     public SuperCharacter addSuperCharacter(SuperCharacter superChar) {
         String INSERT_SUPERCHARACTER = "INSERT INTO superCharacter(name, description, superpower) VALUES(?,?,?)";
-        this.jdbc.update("INSERT INTO superCharacter(name, description, superpower) VALUES(?,?,?)", new Object[]{superChar.getName(), superChar.getDescription(), superChar.getSuperpower()});
+        this.jdbc.update(INSERT_SUPERCHARACTER,
+                superChar.getName(),
+                superChar.getDescription(),
+                superChar.getSuperpower());
         int newId = (Integer)this.jdbc.queryForObject("SELECT LAST_INSERT_ID()", Integer.class);
         superChar.setId(newId);
         return superChar;
     }
 
+
     public void updateSuperCharacter(SuperCharacter superChar) {
-        String UPDATE_STUDENT = "UPDATE superCharacter SET name = ?, description = ?, superpower = ? WHERE id = ?";
-        this.jdbc.update("UPDATE superCharacter SET name = ?, description = ?, superpower = ? WHERE id = ?", new Object[]{superChar.getName(), superChar.getDescription(), superChar.getSuperpower()});
+        String UPDATE_STUDENT = "UPDATE superCharacter SET name = ?, description = ?, superpower = ? WHERE superId = ?";
+        this.jdbc.update("UPDATE superCharacter SET name = ?, description = ?, superpower = ? WHERE superId = ?", new Object[]{superChar.getName(), superChar.getDescription(), superChar.getSuperpower(), superChar.getId()});
     }
 
     @Transactional
     public void deleteSuperCharacterById(int id) {
         String DELETE_HERO_ORGANISATION = "DELETE FROM heroOrganisation WHERE superId = ?";
         this.jdbc.update("DELETE FROM heroOrganisation WHERE superId = ?", new Object[]{id});
-        String DELETE_STUDENT = "DELETE FROM superCharacter WHERE id = ?";
-        this.jdbc.update("DELETE FROM superCharacter WHERE id = ?", new Object[]{id});
+        String DELETE_STUDENT = "DELETE FROM superCharacter WHERE superId = ?";
+        this.jdbc.update("DELETE FROM superCharacter WHERE superId = ?", new Object[]{id});
     }
 
     public List<SuperCharacter> getAllSuperCharacters() {

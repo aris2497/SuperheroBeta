@@ -87,13 +87,13 @@
             </tr>
             </thead>
             <tbody>
-            <tr th:each="superChar : ${superChars}">
+            <tr th:each="superChar : ${superCharacters}">
                 <td th:text="${superChar.id}">SuperCharacter ID</td>
                 <td th:text="${superChar.name}">SuperCharacter name </td>
                 <td th:text="${superChar.description}">SuperCharacter description</td>
                 <td th:text="${superChar.superpower}">SuperCharacter superpower</td>
-                <td>Edit</td>
-                <td>Delete</td>
+                <td><a href="#" th:href="@{/editSuperCharacter(id=${superChar.id})}">Edit</a></td>
+                <td><a href="#" th:href="@{/deleteSuperCharacter(id=${superChar.id})}">Delete</a></td>
             </tr>
             </tbody>
         </table>

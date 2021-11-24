@@ -7,7 +7,7 @@ import java.util.Date;
 import java.util.List;
 
 public interface SightingDao {
-    List<Sighting> getAllSightingByDate(Date sightingDate);
+    List<Sighting> getAllSightingByDate();
     Sighting getSightingByLocationAndTime(Location location, String time);
 
 }

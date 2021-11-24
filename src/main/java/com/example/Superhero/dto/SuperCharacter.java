@@ -37,4 +37,14 @@ public class SuperCharacter {
     public void setSuperpower(String superpower) {
         this.superpower = superpower;
     }
+
+    @Override
+    public String toString() {
+        return "SuperCharacter{" +
+                "id=" + id +
+                ", name='" + name + '\'' +
+                ", description='" + description + '\'' +
+                ", superpower='" + superpower + '\'' +
+                '}';
+    }
 }
